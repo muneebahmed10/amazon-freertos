@@ -259,7 +259,7 @@
 /**
  * @brief The stack size to use for the publish and subscribe tasks.
  */
-#define mqttexampleTASK_STACK_SIZE                   ( configMINIMAL_STACK_SIZE * 6 )
+#define mqttexampleTASK_STACK_SIZE                   ( configMINIMAL_STACK_SIZE * 4 )
 
 /**
  * @brief The maximum number of loop iterations to wait before declaring failure.
@@ -1583,6 +1583,11 @@ static int prvCommandLoop( void )
         if( xQueueReceive( xCommandQueue, &xCommand, mqttexampleDEMO_TICKS_TO_WAIT ) == pdFALSE )
         {
             LogInfo( ( "No commands in the queue. Trying again." ) );
+
+            /* Add the process loop back into the queue. This is in case the platform's
+             * secure sockets layer does not support SOCKETS_SO_WAKEUP_CALLBACK. */
+            prvCreateCommand( PROCESSLOOP, NULL, NULL, &xNewCommand );
+            ( void ) prvAddCommandToQueue( &xNewCommand );
             continue;
         }
 
@@ -1721,7 +1726,7 @@ void prvSyncPublishTask( void * pvParameters )
     xPublishInfo.pPayload = payloadBuf;
 
     /* Synchronous publishes. In case mqttexamplePUBLISH_COUNT is odd, round up. */
-    for( int i = 0; i < ( ( mqttexamplePUBLISH_COUNT + 1 ) / 2 ); i++ )
+    for( i = 0; i < ( ( mqttexamplePUBLISH_COUNT + 1 ) / 2 ); i++ )
     {
         snprintf( payloadBuf, mqttexampleDEMO_BUFFER_SIZE, mqttexamplePUBLISH_PAYLOAD_FORMAT, "Sync", i + 1 );
         xPublishInfo.payloadLength = ( uint16_t ) strlen( payloadBuf );
