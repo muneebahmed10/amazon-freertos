@@ -259,7 +259,7 @@
 /**
  * @brief The stack size to use for the publish and subscribe tasks.
  */
-#define mqttexampleTASK_STACK_SIZE                   ( configMINIMAL_STACK_SIZE * 4 )
+#define mqttexampleTASK_STACK_SIZE                   ( configMINIMAL_STACK_SIZE * 5 )
 
 /**
  * @brief The maximum number of loop iterations to wait before declaring failure.
