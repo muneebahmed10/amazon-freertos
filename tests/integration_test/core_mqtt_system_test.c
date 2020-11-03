@@ -1192,7 +1192,7 @@ void Connect_LWT()
 
     /* Subscribe to LWT Topic. */
     TEST_ASSERT_EQUAL( MQTTSuccess, subscribeToTopic(
-                           &context, TEST_MQTT_LWT_TOPIC, MQTTQoS0 ) );
+                           &context, TEST_MQTT_LWT_TOPIC, MQTTQoS1 ) );
 
     /* Wait for the SUBACK response from the broker for the subscribe request. */
     TEST_ASSERT_EQUAL( MQTTSuccess,
@@ -1226,7 +1226,7 @@ void Connect_LWT()
                        MQTT_ProcessLoop( &context, 2 * MQTT_PROCESS_LOOP_TIMEOUT_MS ) );
 
     /* Test if we have received the LWT. */
-    TEST_ASSERT_EQUAL( MQTTQoS0, incomingInfo.qos );
+    TEST_ASSERT_EQUAL( MQTTQoS1, incomingInfo.qos );
     TEST_ASSERT_EQUAL( TEST_MQTT_LWT_TOPIC_LENGTH, incomingInfo.topicNameLength );
     TEST_ASSERT_EQUAL_MEMORY( TEST_MQTT_LWT_TOPIC,
                               incomingInfo.pTopicName,
