@@ -534,7 +534,7 @@ static void establishMqttSession( MQTTContext_t * pContext,
     lwtInfo.topicNameLength = TEST_MQTT_LWT_TOPIC_LENGTH;
     lwtInfo.pPayload = MQTT_EXAMPLE_MESSAGE;
     lwtInfo.payloadLength = strlen( MQTT_EXAMPLE_MESSAGE );
-    lwtInfo.qos = MQTTQoS0;
+    lwtInfo.qos = MQTTQoS1;
     lwtInfo.dup = false;
     lwtInfo.retain = false;
 
@@ -844,7 +844,7 @@ static void startPersistentSession()
     TEST_ASSERT_TRUE( connectToServerWithBackoffRetries( &networkContext ) );
 
     /* Establish a new MQTT connection for a persistent session with the broker. */
-    establishMqttSession( &context, &networkContext, false, &persistentSession, &buffer, NETWORK_BUFFER_SIZE );
+    establishMqttSession( &context, &networkContext, false, &persistentSession, buffer, NETWORK_BUFFER_SIZE );
     TEST_ASSERT_FALSE( persistentSession );
 }
 
@@ -855,7 +855,7 @@ static void resumePersistentSession()
 
     /* Re-establish the persistent session with the broker by connecting with "clean session" flag set to 0. */
     TEST_ASSERT_FALSE( persistentSession );
-    establishMqttSession( &context, &networkContext, false, &persistentSession, &buffer, NETWORK_BUFFER_SIZE );
+    establishMqttSession( &context, &networkContext, false, &persistentSession, buffer, NETWORK_BUFFER_SIZE );
 
     /* Verify that the session was resumed. */
     TEST_ASSERT_TRUE( persistentSession );
@@ -883,7 +883,7 @@ void testSetUp()
     TEST_ASSERT_TRUE( connectToServerWithBackoffRetries( &networkContext ) );
 
     /* Establish MQTT session on top of the TCP+TLS connection. */
-    establishMqttSession( &context, &networkContext, true, &persistentSession, &buffer, NETWORK_BUFFER_SIZE );
+    establishMqttSession( &context, &networkContext, true, &persistentSession, buffer, NETWORK_BUFFER_SIZE );
 }
 
 /* Called after each test method. */
@@ -1212,7 +1212,7 @@ void Connect_LWT()
     /* Establish MQTT session on top of the TCP+TLS connection. */
     static uint8_t lwtBuffer[ 100 ];
     useLWTClientIdentifier = true;
-    establishMqttSession( &secondContext, &secondNetworkContext, true, &sessionPresent, &lwtBuffer, 100 );
+    establishMqttSession( &secondContext, &secondNetworkContext, true, &sessionPresent, lwtBuffer, 100 );
     useLWTClientIdentifier = false;
 
     /* Abruptly terminate TCP connection. */
