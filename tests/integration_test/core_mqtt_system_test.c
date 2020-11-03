@@ -1184,6 +1184,15 @@ void Connect_LWT()
     bool sessionPresent;
     MQTTContext_t secondContext;
 
+    /* Subscribe to LWT Topic. */
+    TEST_ASSERT_EQUAL( MQTTSuccess, subscribeToTopic(
+                           &context, TEST_MQTT_LWT_TOPIC, MQTTQoS0 ) );
+
+    /* Wait for the SUBACK response from the broker for the subscribe request. */
+    TEST_ASSERT_EQUAL( MQTTSuccess,
+                       MQTT_ProcessLoop( &context, MQTT_PROCESS_LOOP_TIMEOUT_MS ) );
+    TEST_ASSERT_TRUE( receivedSubAck );
+
     /* Establish a second TCP connection with the server endpoint, then
      * a TLS session. The server info and credentials can be reused. */
     TEST_ASSERT_EQUAL( TRANSPORT_SOCKET_STATUS_SUCCESS, SecureSocketsTransport_Connect( &secondNetworkContext,
@@ -1193,15 +1202,6 @@ void Connect_LWT()
     /* Establish MQTT session on top of the TCP+TLS connection. */
     useLWTClientIdentifier = true;
     establishMqttSession( &secondContext, &secondNetworkContext, true, &sessionPresent );
-
-    /* Subscribe to LWT Topic. */
-    TEST_ASSERT_EQUAL( MQTTSuccess, subscribeToTopic(
-                           &context, TEST_MQTT_LWT_TOPIC, MQTTQoS0 ) );
-
-    /* Wait for the SUBACK response from the broker for the subscribe request. */
-    TEST_ASSERT_EQUAL( MQTTSuccess,
-                       MQTT_ProcessLoop( &context, MQTT_PROCESS_LOOP_TIMEOUT_MS ) );
-    TEST_ASSERT_TRUE( receivedSubAck );
 
     /* Abruptly terminate TCP connection. */
     ( void ) SecureSocketsTransport_Disconnect( &secondNetworkContext );
