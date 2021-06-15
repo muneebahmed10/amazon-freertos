@@ -15,4 +15,8 @@ afr_module_dependencies(
     INTERFACE
         AFR::greengrass
         AFR::core_mqtt
+        AFR::backoff_algorithm
+        AFR::transport_interface_secure_sockets
+        AFR::secure_sockets
+        AFR::pkcs11_helpers
 )
