@@ -297,6 +297,11 @@
 			<locationURI>AWS_IOT_MCU_ROOT/libraries/c_sdk/standard/common/logging/iot_logging.c</locationURI>
 		</link>
 		<link>
+			<name>libraries/c_sdk/standard/common/include/private/iot_lib_init.h</name>
+			<type>1</type>
+                        <locationURI>AWS_IOT_MCU_ROOT/libraries/c_sdk/standard/common/include/private/iot_lib_init.h</locationURI>
+		</link>
+		<link>
 			<name>libraries/c_sdk/standard/common/include/private/iot_logging.h</name>
 			<type>1</type>
 			<locationURI>AWS_IOT_MCU_ROOT/libraries/c_sdk/standard/common/include/private/iot_logging.h</locationURI>

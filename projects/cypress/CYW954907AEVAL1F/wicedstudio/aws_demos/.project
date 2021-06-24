@@ -242,6 +242,11 @@
 			<locationURI>BASE_DIR/libraries/c_sdk/standard/common/include/private/iot_logging.h</locationURI>
 		</link>
 		<link>
+			<name>libraries/c_sdk/standard/common/include/private/iot_lib_init.h</name>
+			<type>1</type>
+			<locationURI>BASE_DIR/libraries/c_sdk/standard/common/include/private/iot_lib_init.h</locationURI>
+		</link>
+		<link>
 			<name>libraries/c_sdk/standard/common/include/iot_logging_task.h</name>
 			<type>1</type>
 			<locationURI>BASE_DIR/libraries/c_sdk/standard/common/include/iot_logging_task.h</locationURI>
